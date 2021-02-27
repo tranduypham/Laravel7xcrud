@@ -1,0 +1,230 @@
+<link rel="stylesheet" href="{{ asset(" /be-assets/js/select2/select2.min.css") }}" />
+
+
+
+<script src="{{ asset(" /be-assets/js/select2/select2.full.min.js") }}"></script>
+
+<script>
+
+    $(document).ready(function () {
+        // This function is trigger whenever you add a product, remove a product, change the quantity of product in the table
+        // It will scan every single row in the table, re-calculate every sumary price of each row
+        // And then re-calculate the total price of the whole table
+        // Finnaly it will re-write the total price column with the value it calculated previously
+        function updateCart() {
+            // Define a varibable name total = 0
+            var total = 0;
+            // run a foreach loop on each input has name product_quantity (The amount of each product inside the table)
+            $("input[name='product_quatity[]").each(function (index, value) {//The callback function pass 2 parameter (index of element and it own value?)
+                // Actually the second para value here, is the element it self mean value = $(this)
+                console.log(index);
+
+                console.log(value);
+
+
+                // Set variable t as the current element (the input)
+                var t = $(this);
+                // This is this parent row of the input element
+                var tr = t.closest("tr");
+                // The number value of the current input
+                var quantity = t.val();
+                // The price from the product_price column
+                var price = tr.find("td.product_price").text();
+                // Make sure that the product price will be a number
+                price = parseFloat(price);
+
+
+                // Must be the total price for each row (product)
+                var tt = quantity * price;
+
+
+
+                console.log(quantity);
+
+                console.log(price);
+
+                console.log(tt);
+                // Move to the column total price of each row and set the total value we previous calculate
+                tr.find("td.product_price_total").text(tt);
+
+                // Add the total value of the whole product table
+                total += tt;
+            });
+            // Set the elemen class payment-price text as the total price of the table
+            $("#payment-price").text(total);
+        }
+
+        // Use select2 and our own API link to fetch the Products from the products table to the select box
+        $('#search_product').select2({
+            // Placholder of select box
+            placeholder: 'Tìm 1 sản phẩm',
+            // AJAX function to fetch the data from the api link you create
+            ajax: {
+                // Method sending data
+                type: 'POST',
+                // The data that you sended, what would it look like when it reach the api link
+                data: function (params) {
+                    // It will be and object with key name query with 2 parameter
+                    query = {
+                        // First one is the data that you type in the select box has class search_product
+                        search: params.term,
+                        // Second one is the token .aka the @crfs flag that you add, this token is essentail to send data using post method, it provide a way to protect and encrypt the data
+                        _token: "{{ csrf_token() }}"
+                    };
+                    // Return here mean send the query obj away
+                    return query;
+                },
+                // The URL of API, this link you create in the web.php
+                // The api link will lead you to a function that find and return the data from the database in JSON type
+                // These data will be receive as a respone()
+                url: "{{ url('/backend/orders/searchProduct') }}",
+
+                // This line show how you will proccess the result after you receive it
+                processResults: function (data) {
+                    // Consol.log the data
+                    console.log(data);
+                    // Print our the data? I assume that? In a Select2 way, we dont know it yet
+                    return data;
+                }
+            }
+        });
+
+        // An event when you click the add to cart button
+        // It will add the products that you have choosen in the select box and add it to the table below
+        $("#addtocart").on("click", function (e) {
+
+            e.preventDefault();
+            // Set id as the value of the search product select box
+            var id = $('#search_product').val();
+            // The value here would the the id of the product that you've choosen
+            id = parseInt(id);//parseInt to make sure the the id would be the number integer type
+
+            // If the id > 0 mean there are choosen product
+            if (id > 0) {
+                // We use the ajax function of jQueury to send a request to an API link
+                // The API link here we create in the Route file web.php
+                // It will lead us to the function that will respone the code of a single row
+                // of the product that we are going to add into the table
+                $.ajax({
+                    // The method sending thr data here is POST
+                    method: "POST",
+                    // The url is pre define in Route file
+                    url: "{{ url('/backend/orders/ajaxSingleProduct') }}",
+                    // Data we send will be a object
+                    data: {
+                        id: id,//The id of the product the we choosen in the select box
+                        _token: "{{ csrf_token() }}"//And the default token for secure reason when you send things using post method
+                    }
+                }).done(function (product) {//ajax here is a promise with multiple action after you trigger it (done, fail, always, then)
+                    // pass the product as the input data into the done function
+                    console.log(product);
+                    // checkTr will check if the product id is exist in the table yet. If it exist, the length should > 0 and we cant add this product in again? maybe?
+                    checkTr = $("tbody#list-cart-product").find("#tr-" + product.id).length;
+                    // Make sure checkTr is a integer number
+                    checkTr = parseInt(checkTr);
+                    // if product id is a real number and the curent product quantity (the remain product in stock) bigger than 0 and the checkTr is < than 1 (Mean the product we gonna add is not exist in the table yet)
+                    if (product.id !== "undefined" && product.product_quantity > 0 && checkTr < 1) {
+                        // Create a html argument
+                        // This is a row has class = tr-(product id)
+                        var html = '<tr id="tr-' + product.id + '">\n' +
+                            // first column is the product id and a hidden iput have the value of product id ? What for ?
+                            '                        <td>\n' +
+
+                            '                            \n' + product.id +
+
+                            '                            <input type="hidden" name="product_ids[]" class="form-control" style="width: 150px" value="' + product.id + '">\n' +
+
+                            '                        </td>\n' +
+                            // Second column is the product img
+                            '                        <td><img src="' + product.product_image + '" style="width: 100px; height: auto;"> </td>\n' +
+                            // Third column is the Product name
+                            '                        <td>' + product.product_name + '</td>\n' +
+                            // Fourth column is the input for us to type the number of product that we want to buy
+                            '                        <td>\n' +
+
+                            '                            <input type="number" name="product_quatity[]" class="form-control" style="width: 150px" value="1">\n' +
+
+                            '                        </td>\n' +
+                            // Fifth column is the product price
+                            '                        <td class="product_price">\n' + product.product_price + '\n' +
+
+                            '                        </td>\n' +
+                            // Sixth column is the total price of the amount of product that you add
+                            '                        <td class="product_price_total">\n' + product.product_price +
+
+                            '                        </td>\n' + '\n' +
+                            // Seventh column is the button for deleting product from the table
+                            // This button is an a tag with class name removeCart
+                            '                        <td>\n' +
+
+                            '                            <a href="#" class="btn btn-danger removeCart">Xóa</a>\n' +
+
+                            '                        </td>\n' +
+
+                            '                    </tr>';
+                        // End of row
+                        $("tbody#list-cart-product").append(html);//We apen the row we create to the tbody
+                        // And call the update cart function
+                        updateCart();
+                    }
+                    // If the product has already in the table, or the product quantity is <= 0 or the product id is undefine
+                    // which could simply explain ass some error while respone or some sort of SQLi hacking I guess
+                    // this alert will pop up
+                    else {
+                        alert("thêm sản phẩm không thành công do đã có sp trong giỏ hàng hoặc lỗi hệ thống");
+                    }
+
+                });
+            }
+            else {//No chooosen product yet
+                alert("chọn sản phẩm trước khi thêm nó vào đơn hàng");
+            }
+
+            console.log(id);
+
+        });
+
+        // Each product in the table you added had a remove button
+        // This is the event when you click the remove product button
+        $("body").on("click", "a.removeCart", function (e) {
+
+            e.preventDefault();
+
+            // Reach the current row of the button that we cilcked
+            // And then remove it self (remove the row it self)
+            $(this).closest("tr").remove();
+
+            // Update the price of the table
+            updateCart();
+
+        });
+
+        // Each product in the table has their own input for quantity
+        // This is the event happend when you change the quantity of the product
+        $("body").on("change", "input[name='product_quatity[]']", function () {//Event will be trigger whenever and input[name = 'product_quantity'] in side body happend to change
+
+            // The quantity of product in the input
+            var quantity = $(this).val();//This here mean the input it self
+
+            quantity = parseInt(quantity);
+            // if quantity in appropriate amount
+            if (quantity > 0 && quantity < 100) {
+                // Update the price
+                updateCart();
+            } else {// Not an appropriate amount
+                // set the value to 1
+                $(this).val(1);
+                // Pop up an alert
+                alert("chỉ được mua số lượng (1 đến 99)/một sản phẩm");
+                // Update the price in the table again
+                updateCart();
+
+            }
+
+        });
+
+    });
+
+</script>
+<img src="" alt="">
+'<input type="number" name="quantity" id="quantity">'

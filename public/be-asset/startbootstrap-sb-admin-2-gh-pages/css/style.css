@@ -2,3 +2,22 @@
     width: 200px;
     height: auto;
 }
+td
+img{
+    width: 100px;
+    height: auto;
+    margin: 0 auto;
+}
+input .product_quantity{
+    user-select: all;
+}
+div>strong{
+    display: inline-block;
+    width: 250px;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+}
+div>span{
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

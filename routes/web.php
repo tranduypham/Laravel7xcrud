@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Backend\ProductModel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,20 +24,31 @@ Route::get('/backend/product/delete/{id}', 'Backend\ProductController@delete');
 Route::get('/backend/product/delete/', 'Backend\ProductController@index');
 
 // Lưu sản phẩm
-Route::post('/backend/product/store','Backend\ProductController@store');
+Route::post('/backend/product/store', 'Backend\ProductController@store');
 
 // Update sản phẩm
-Route::post("/backend/product/update/{id}","Backend\ProductController@update");
+Route::post("/backend/product/update/{id}", "Backend\ProductController@update");
 
 //Xóa sản phẩm
-Route::post('/backend/product/destroy/{id}',"Backend\ProductController@destroy");
+Route::post('/backend/product/destroy/{id}', "Backend\ProductController@destroy");
 
 // Catalog
-Route::resource('product/catagory',Backend\CatagoryController::class);
-Route::get('/backend/product/delete/{id}','Backend\CatagoryController@delete');
+Route::resource('product/catagory', Backend\CatagoryController::class);
+Route::get('/backend/product/delete/{id}', 'Backend\CatagoryController@delete');
 
 // Order
-Route::resource('orders','OrderController');
-Route::get('/backend/order/{id}/delete',"OrderController@delete");
-
-
+Route::resource('orders', 'Backend\OrderController');
+Route::get('/backend/order/{id}/delete', "Backend\OrderController@delete");
+Route::post('/backend/order/api/getProducts', function (Request $request) {
+    $input = $request->input('product_name', "");
+    $output = DB::table('products')->where("product_name", 'like', "%$input%")->get();
+    return response()->json($output, 200);
+})->name("apiGetProducts");
+Route::post('/backend/order/api/getProducts/{id}', function ($id) {
+    $result = ProductModel::findOrFail($id);
+    return response()->json($result, 200);
+})->name("getProduct");
+Route::post('/backend/order/api/getProductsQuantity/{id}', function ($id) {
+    $result = ProductModel::findOrFail($id);
+    return response()->json($result->product_quantity, 200);
+})->name("getProductQuantity");

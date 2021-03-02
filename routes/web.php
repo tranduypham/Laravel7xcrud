@@ -52,3 +52,11 @@ Route::post('/backend/order/api/getProductsQuantity/{id}', function ($id) {
     $result = ProductModel::findOrFail($id);
     return response()->json($result->product_quantity, 200);
 })->name("getProductQuantity");
+
+//setting
+Route::get('/backend/setting',"Backend\SettingController@edit")->name("setting");
+Route::post('/backend/setting',"Backend\SettingController@update")->name("setting.update");
+
+//Admin
+Route::resource('admin', Backend\AdminController::class);
+Route::get('admin/{id}/delete',"Backend\AdminController@delete")->name("admin.delete");

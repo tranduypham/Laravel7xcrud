@@ -55,6 +55,18 @@
                 <span>Đơn hàng</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route("admin.index")}}">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Admin</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route("setting")}}">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Cấu hình</span>
+            </a>
+        </li>
     </div>
 
 </ul>

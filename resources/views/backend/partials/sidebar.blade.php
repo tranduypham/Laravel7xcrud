@@ -32,7 +32,7 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{url("/backend/product/index")}}" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-fw fa-shopping-bag"></i>
                 <span>Sản phẩm</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -45,19 +45,19 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{url("/product/catagory")}}">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-fw fa-clipboard-list"></i>
                 <span>Danh mục</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{route("orders.index")}}">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-fw fa-calendar"></i>
                 <span>Đơn hàng</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{route("admin.index")}}">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-fw fa-users"></i>
                 <span>Admin</span>
             </a>
         </li>

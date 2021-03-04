@@ -165,28 +165,66 @@
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
+                        @php
+                            $sessionLogin = session("admin_login",false);//Đi đến session "admin_login", nếu session ko tồn tại, đặt mặc định bằng false
+                            if($sessionLogin){
+                                $id = $sessionLogin["id"];
+                                $nameLogin = $sessionLogin["name"];
+                                // $id = $sessionLogin["email"];
+                                // $id = $sessionLogin["password"];
+                                $avatarLogin = $sessionLogin["avatar"];
+                                $avatarLogin = str_replace("public/","storage/",$avatarLogin);
+                                // $id = $sessionLogin["desc"];
+                            }
+                        @endphp
                         <!-- Nav Item - User Information -->
+                        <style>
+                            img.img-profile-duy{
+                                width: var(--img);
+                                height: 100%;
+
+                            }
+                            :root{
+                                --div: 40px;
+                                --img: 60px;
+                            }
+                            div.avatar{
+                                border-radius: 50%;
+                                width: var(--div);
+                                height: var(--div);
+                                overflow: hidden;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                            }
+                        </style>
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="{{asset("be-asset/startbootstrap-sb-admin-2-gh-pages")}}/img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$nameLogin}}</span>
+                                <div class="avatar">
+                                    <img class="img-profile-duy"
+                                        src="{{asset($avatarLogin)}}">
+                                </div>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{route("admin.show",$id)}}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{route("setting")}}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
+                                </a>
+                                <a class="dropdown-item" href="{{route("Dashboard")}}">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Thống kê
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

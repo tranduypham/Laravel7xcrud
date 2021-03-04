@@ -13,6 +13,10 @@ use App\Models\Backend\ProductModel;
 
 class CatagoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("backend_authenticate");
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +28,7 @@ class CatagoryController extends Controller
 
         $catagories = CatagoryModel::where("catagory_name", 'like', "%" . $search_catagory_name . "%");
         $catagories = $catagories->paginate(5);
-        
+
         return view('backend.catagory.index', compact(['catagories', 'search_catagory_name']))
             ->with("i", ((request()->query('page', 1) - 1) * 5));
     }
@@ -156,6 +160,6 @@ class CatagoryController extends Controller
             return redirect(url("/backend/product/delete/$id"))
                 ->with('status', 'Phải xóa hết các sản phẩm trong danh mục trước đã');
         }
-        
+
     }
 }

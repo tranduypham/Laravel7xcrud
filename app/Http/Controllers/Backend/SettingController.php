@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 class SettingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("backend_authenticate");
+    }
     //
     public function edit()
     {

@@ -4,12 +4,21 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("backend_authenticate");
+    }
     // Index trả về trang chủ
     public function index(){
-        return view('backend.products.index');
+        $countProduct = DB::table('products')->count();
+        $countCatagories = DB::table('catagory')->count();
+        $countOrder = DB::table('orders')->count();
+        $countAdmin = DB::table('admin')->count();
+        return view('backend.dashboard.home',compact(["countProduct","countCatagories","countOrder","countAdmin"]));
     }
     //end of Index
 

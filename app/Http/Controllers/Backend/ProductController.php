@@ -7,11 +7,16 @@ use App\Models\Backend\CatagoryModel;
 // Đây là namespace của model này
 use App\Models\Backend\ProductModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("backend_authenticate");
+    }
     //Phương thức delete
     //Xóa một phần tử
     public function delete($id)
@@ -105,6 +110,9 @@ class ProductController extends Controller
     public function index(Request $request)
     {
 
+        // var_dump($request->cookie("admin_login_remember"));
+
+        // dd($request->cookie("admin_login_remember"));
         // $products = ProductModel::all();
         //Giói hạn mỗi trang chỉ có 10 bản ghi
         //Phải viết join trc rồi mới viết where (Hiểu nôm na cái join nó ở trong Form, diễn ra ở trc cái where)

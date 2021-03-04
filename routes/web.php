@@ -60,3 +60,14 @@ Route::post('/backend/setting',"Backend\SettingController@update")->name("settin
 //Admin
 Route::resource('admin', Backend\AdminController::class);
 Route::get('admin/{id}/delete',"Backend\AdminController@delete")->name("admin.delete");
+
+//Login-logout
+// Cách sử dụng cookie
+// https://stackoverflow.com/questions/53737346/how-to-create-and-destroy-cookie-in-laravel-5-7
+Route::get('backend/admin-login',"Backend\AdminLoginController@login")->name("admin.login");
+Route::post('backend/admin-login',"Backend\AdminLoginController@auth")->name("admin.auth");
+Route::get('backend/admin-logout',"Backend\AdminLoginController@logout")->name("admin.logout");
+// ->middleware("backend_authenticate")
+
+// Dashboard Thống kê
+Route::get('dashboard',"Backend\DashboardController@index")->name("Dashboard");

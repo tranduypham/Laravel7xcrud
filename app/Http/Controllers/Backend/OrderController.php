@@ -93,13 +93,13 @@ class OrderController extends Controller
         $order->order_status = $request->input('order_status', 0);
         $order->order_note = $request->input('order_note', "") || "";
         $order->save();
-        foreach ($products_id as $index => $products_id) {
+        foreach ($products_id as $index => $product_id) {
             // echo $order->id;
             // echo $products_id;
             // echo $products_quantity[$index];
             $orderDetail = new OrderDetailModel();
-            $orderDetail->product_id = $products_id;
-            $product = ProductModel::find($products_id);
+            $orderDetail->product_id = $product_id;
+            $product = ProductModel::find($product_id);
             $orderDetail->product_price = $product->product_price;
             $orderDetail->quantity = $products_quantity[$index];
             $product->product_quantity = (int)$product->product_quantity - $products_quantity[$index];

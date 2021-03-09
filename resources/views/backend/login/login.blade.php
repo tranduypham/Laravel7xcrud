@@ -41,7 +41,9 @@
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user"
                                             id="exampleInputEmail" name="email" aria-describedby="emailHelp"
-                                            placeholder="Enter Email Address...">
+                                            placeholder="Enter Email Address..." value="{{old("email
+
+                                            ")}}">
                                             @error('email')
                                             <p class="ml-2 mt-2 text-sm text-danger">{{$message}}</p>
                                             @enderror

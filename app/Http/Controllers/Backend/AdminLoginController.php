@@ -20,7 +20,7 @@ class AdminLoginController extends Controller
         // var_dump($session_admin_login["id"]);
         // die;
         if($session_admin_login && isset($session_admin_login["id"])&& $session_admin_login["id"]>0){
-            return redirect("/");
+            return redirect("/backend");
         }
         return view("backend.login.login");
         // dd(session("admin_login"));
@@ -66,7 +66,7 @@ class AdminLoginController extends Controller
 
             // Quay ve trang chu
             // return redirect("/")->cookie($cookie);//cookies tạo ra phải được gắn vào cái return này thì mới được gửi về cho người dùng
-            return redirect("/");
+            return redirect("/backend");
         }else{
             return redirect(route("admin.login"))->with("status","Wrong Username or Password");
         }

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get('/', 'Backend\ProductController@index');
+Route::get('/backend', 'Backend\ProductController@index');
 Route::get('/backend/product/index', 'Backend\ProductController@index');
 Route::get('/backend/product/create', 'Backend\ProductController@create');
 Route::get('/backend/product/edit/{id}', 'Backend\ProductController@edit');
@@ -71,3 +71,17 @@ Route::get('backend/admin-logout',"Backend\AdminLoginController@logout")->name("
 
 // Dashboard Thống kê
 Route::get('dashboard',"Backend\DashboardController@index")->name("Dashboard");
+
+
+// Homepage
+Route::get("/","Frontend\HomepageController@index")->name("homepage");
+Route::get("/homepage/{id}/catagory","Frontend\ProductCatagoryController@index")->name("ProductCata");
+Route::get("/homepage/search","Frontend\SearchController@search")->name("search");
+Route::get("/homepage/{id}/product","Frontend\ProductController@index")->name("product");
+Route::get("/homepage/{id}/addCart","Frontend\CartController@add")->name("addToCart");
+Route::get("/homepage/Cart","Frontend\CartController@index")->name("indexCart");
+Route::get("/homepage/Cart/Update","Frontend\CartController@update")->name("updateCart");
+Route::get("/homepage/Cart/Remove","Frontend\CartController@remove")->name("removeItem");
+Route::get("/homepage/Cart/Clear","Frontend\CartController@clear")->name("clearCart");
+Route::get("/homepage/Checkout","Frontend\CartController@checkout")->name("Checkout")->middleware("CheckOutIndex");
+Route::post("/homepage/Payment","Frontend\PaymentController@pay")->name("Payment")->middleware("CheckOutIndex");

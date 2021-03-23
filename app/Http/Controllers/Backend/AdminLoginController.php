@@ -43,6 +43,7 @@ class AdminLoginController extends Controller
             // $request->session()->flash("status","Username is not exist");
             // return redirect(route("admin.login"));
         }
+        
         if(isset($admin->id)&&$admin->id>0&&Hash::check($password, $admin->password)){
             $adminLogin = [
                 "id"=>$admin->id,

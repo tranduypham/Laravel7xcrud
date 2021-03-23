@@ -62,6 +62,18 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{route("Liquid.reply.index")}}">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Reply</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route("Review.index")}}">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Review</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{route("setting")}}">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Cấu hình</span>

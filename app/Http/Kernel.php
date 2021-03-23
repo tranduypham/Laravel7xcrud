@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'backend_authenticate'=> \App\Http\Middleware\AdminLogin::class,
         'CheckOutIndex'=> \App\Http\Middleware\CheckOutIndex::class,
+        'CKFinderMiddleware'=> \App\Http\Middleware\CustomCKFinderAuth\CKFinderMiddleware::class,
     ];
 }

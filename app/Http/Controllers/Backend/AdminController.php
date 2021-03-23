@@ -134,6 +134,17 @@ class AdminController extends Controller
         $admin->email = $request->input('email');
         $admin->desc = $request->input('desc');
         $admin->save();
+        // Cập nhật lên session
+        $admin = DB::table('admin')->where("email",$email)->first();
+        $adminLogin = [
+            "id"=>$admin->id,
+            "name"=>$admin->name,
+            "email"=>$admin->email,
+            "password"=>$admin->password,
+            "avatar"=>$admin->avatar,
+            "desc"=>$admin->desc
+        ];
+        session(["admin_login"=>$adminLogin]);
         return redirect(route("admin.edit",$id))->with("status", "Sửa thông tin thành công");
     }
 

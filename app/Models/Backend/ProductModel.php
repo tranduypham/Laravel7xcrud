@@ -13,4 +13,8 @@ class ProductModel extends Model
 
     // Khai báo khóa chính
     protected $primaryKey = 'id';
+    public function Catagory(){
+        return $this->hasOne('App\Models\Backend\CatagoryModel','id','catagory_id');
+    }
 }
+

@@ -65,10 +65,10 @@ class ProductController extends Controller
             'product_price' => 'required',
             'catagory_id' => 'required',
         ]);
-        // echo "hello";
-        echo "<pre>";
-        print_r($request->input());
-        echo "</pre>";
+        // // echo "hello";
+        // echo "<pre>";
+        // print_r($request->input());
+        // echo "</pre>";
 
 
         $product_name = $request->input('product_name', "NO NAME");
@@ -79,6 +79,7 @@ class ProductController extends Controller
         $product_desc = $request->input('product_desc', "");
         $product_status = $request->input('product_status', 1);
         $product_catagory_id = $request->input('catagory_id', 0);
+        $sale = $request->input('sale', 0);
 
         if (!$product_publish) {
             $product_publish = date("Y-m-d H:i:s");
@@ -100,6 +101,7 @@ class ProductController extends Controller
         $PRODUCT_SAVE->product_desc = $product_desc;
         $PRODUCT_SAVE->product_status = $product_status;
         $PRODUCT_SAVE->catagory_id = $product_catagory_id;
+        $PRODUCT_SAVE->sale = $sale;
 
         $PRODUCT_SAVE->save();
 
@@ -120,7 +122,7 @@ class ProductController extends Controller
         ->join('catagory', function($join){
             $join->on('catagory.id','products.catagory_id');
         })
-        ->select('products.id','products.catagory_id as catagory_id','catagory.catagory_name as catagory_name','product_name','product_image','product_desc','product_publish','product_quantity','product_price','product_status');
+        ->select('products.id','products.catagory_id as catagory_id','catagory.catagory_name as catagory_name','product_name','product_image','product_desc','product_publish','product_quantity','product_price','product_status','sale');
         $search_product_name = $request->query('search_product_name', "");
         // $products = DB::table('products')->paginate(10);
         // $products = ProductModel::where('product_name', "LIKE", "%" . $search_product_name . "%");
@@ -156,6 +158,11 @@ class ProductController extends Controller
                 case "quantity_desc":
                     $products = $products->orderBy('product_quantity', "desc");
             }
+        }
+
+        if($request->hasAny('sale')){
+            $products = $products->where("sale",">","0");
+            $data['sale']="sale";
         }
         $data["product_sort"] = $product_sort;
         $products = $products->paginate(5);

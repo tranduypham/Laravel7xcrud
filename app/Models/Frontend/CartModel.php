@@ -5,6 +5,7 @@ namespace App\Models\Frontend;
 
 class CartModel
 {
+    public static $array = [];
     //
     /**
      * An unique ID for the cart.

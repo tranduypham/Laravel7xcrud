@@ -13,5 +13,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        "ckfinder/*",
+        'http://localhost:8000/liquid/blog/store',
+        'http://localhost:8000/liquid/blog/store/*',
     ];
 }

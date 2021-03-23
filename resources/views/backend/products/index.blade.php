@@ -10,6 +10,7 @@
         var status = document.querySelector("#product_status");
         var sort = document.querySelector("#product_sort");
         var catagory_id = document.querySelector("#catagory_id");
+
         var btn = document.querySelector(".submit");
         search.value = "";
         status.value = "";
@@ -98,6 +99,7 @@ $page = isset($_GET['page'])?$_GET['page']:1;
         <option value="1" {{$product_status==1?"selected":""}}>Đang mở bán</option>
         <option value="2" {{$product_status==2?"selected":""}}>Chưa mở bán</option>
     </select>
+
     <select class="form-control ml-2 mb-2" id="catagory_id" name="catagory_id">
         <option selected disabled>Lọc theo danh mục</option>
         @foreach($catagory as $id => $catagory_name)
@@ -112,6 +114,9 @@ $page = isset($_GET['page'])?$_GET['page']:1;
         <option value="quantity_desc" {{$product_sort=="quantity_desc"?"selected":""}}>Tồn kho giảm dần</option>
     </select>
     <input type="hidden" name="page" class="page" value="1">
+    <div class="form-control ml-2 mb-2">
+        <input type="checkbox" value="sale" name="sale" {{ isset($sale)?"checked":"" }}> Sale-off
+    </div>
 
     <div class="form-group ml-3">
         <button type="submit" class="btn btn-primary mb-2 submit" name="search_submit" value="submit">Search</button>
@@ -178,6 +183,7 @@ $page = isset($_GET['page'])?$_GET['page']:1;
                             @php
                             $status = "<p class='text-secondary'>Không rõ</p>";
                             $catagory = "";
+                            $product_sale = "";
                             if($product->product_status){
                                 if($product->product_status==1){
                                     $status = "<p class='text-success '>Đã mở bán</p>";
@@ -187,11 +193,15 @@ $page = isset($_GET['page'])?$_GET['page']:1;
                             if($product->catagory_id){
                                 $catagory = "<p class='text-info font-weight-bold mt-2'>".$product->catagory_name."</p>";
                             }
+                            if(((int)$product->sale)>0){
+                                $product_sale = "<p class='text-warning font-weight-bold mt-2'>".$product->sale."%</p>";
+                            }
 
                             }
                             @endphp
                             {!!$catagory!!}
                             {!!$status!!}
+                            {!!$product_sale!!}
 
                         </td>
                         <td class="img-index">

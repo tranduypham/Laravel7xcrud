@@ -80,6 +80,46 @@
         </div>
     </div>
     @php
+    $check10="";
+    $check25="";
+    $check50="";
+    $check75="";
+    if($product->sale==10){
+    $check10="checked";
+    }
+    if($product->sale==25){
+    $check25="checked";
+    }
+    if($product->sale==50){
+    $check50="checked";
+    }
+    if($product->sale==75){
+    $check75="checked";
+    }
+    
+    @endphp
+    <div class="form-group">
+        <div class="form-check form-check-inline">
+            <label class="form-check-label" for="product_status">Sale :</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="product_status_1" name="sale" value="10" {{$check10}}>
+            <label class="form-check-label" for="product_status_1">10%</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="product_status_2" name="sale" value="25" {{$check25}}>
+            <label class="form-check-label" for="product_status_2">25%</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="product_status_2" name="sale" value="50" {{$check50}}>
+            <label class="form-check-label" for="product_status_2">50%</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="product_status_2" name="sale" value="75" {{$check75}}>
+            <label class="form-check-label" for="product_status_2">75%</label>
+        </div>
+    </div>
+    @php
         $product_catagory_id = $product->catagory_id;
     @endphp
     <div class="form-group">

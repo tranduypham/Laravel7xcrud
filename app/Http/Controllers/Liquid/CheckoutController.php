@@ -55,6 +55,7 @@ class CheckoutController extends Controller
     }
 
     public function store(Request $request){
+        // dd(session("array"));
         $request->validate([
             "first_name"=>"required",
             "last_name"=>"required",
@@ -95,7 +96,10 @@ class CheckoutController extends Controller
             }
         }
 
-        $this->cart->destroy();
+        foreach(session("array") as $id){
+            $this->cart->remove($id);
+        }
+
 
         return redirect(route("Liquid.cart.index"))->with("status","Tạo đơn hàng thành công");
     }

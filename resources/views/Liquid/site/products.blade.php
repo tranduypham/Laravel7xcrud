@@ -14,11 +14,11 @@
                     <div class="row mb-4">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
                             <h4 class="product-select">Select Types of Products</h4>
-                            <select class="selectpicker" multiple>
+                            {{-- <select class="selectpicker" multiple>
                                 @foreach ($catagories as $catagory)
                                     <option value="{{ $catagory->id }}">{{ $catagory->catagory_name }}</option>
                                 @endforeach
-                            </select>
+                            </select> --}}
                         </div>
                     </div>
                     <div class="table-products">
@@ -82,19 +82,23 @@
 
                     <div class="sidebar-box ftco-animate">
                         <h3>Recent Blog</h3>
+                        @foreach ($blogs as $blog)
                         <div class="block-21 mb-4 d-flex">
                             <a class="blog-img mr-4"
-                                style="background-image: url({{ asset('liquorstore-master/') }}/images/image_1.jpg);"></a>
+                                style="background-image: url({{ asset(str_replace("public/","storage/",$blog->thumbnail)) }});"></a>
                             <div class="text">
-                                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
-                                        blind texts</a></h3>
+                                <h3 class="heading"><a href="#">{{ $blog->name }}</a></h3>
                                 <div class="meta">
-                                    <div><a href="#"><span class="fa fa-calendar"></span> Apr. 18, 2020</a></div>
-                                    <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
+                                    @php
+                                        $date = new DateTime($blog->created_at);
+                                    @endphp
+                                    <div><a href="#"><span class="fa fa-calendar"></span>{{ $date->format(" M. j,Y") }}</a></div>
+                                    {{-- <div><a href="#"><span class="fa fa-comment"></span> 19</a></div> --}}
                                 </div>
                             </div>
                         </div>
-                        <div class="block-21 mb-4 d-flex">
+                        @endforeach
+                        {{-- <div class="block-21 mb-4 d-flex">
                             <a class="blog-img mr-4"
                                 style="background-image: url({{ asset('liquorstore-master/') }}/images/image_2.jpg);"></a>
                             <div class="text">
@@ -117,7 +121,7 @@
                                     <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                 </div>
@@ -144,8 +148,7 @@
                     success: function(data){
                         $(".table-products").html(data);
                     }
-
-                })
+                });
             };
 
             $("body").on("click",".pagination a",function(event){
@@ -157,6 +160,25 @@
                 console.log(next_page);
                 fetch_data(next_page);
             });
+
+            // $("select").on("change",function(event){
+            //     event.preventDefault();
+            //     text = "";
+            //     setTimeout(function(){
+            //         text = $(".filter-option-inner-inner").text();
+            //         console.log(text);
+            //         $.ajax({
+            //             url: '{{ route("Liquid.product.index.catagory.multi") }}',
+            //             data: {
+            //                 catalog: text
+            //             },
+            //             success: function(data){
+            //                 // console.log(data);
+            //                 // $(".table-products").html(data);
+            //             }
+            //         });
+            //     },100);
+            // });
         });
 
         // THêm sản phẩm vạo giọ hàng

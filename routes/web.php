@@ -90,7 +90,7 @@ Route::post("/homepage/Payment", "Frontend\PaymentController@pay")->name("Paymen
 
 // Upload và quản lý ảnh
 // https://www.youtube.com/watch?v=iQZNabepPkQ
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'backend_authenticate']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
@@ -102,20 +102,21 @@ Route::get('/backend/liquid/reply/show/{id}', "Backend\ReplyController@show")->n
 Route::resource('/backend/Review', "Backend\ReviewController");
 Route::get('/backend/Review/delete/{id}', "Backend\ReviewController@delete")->name("Review.delete");
 
-Route::get('liquid/blog', function () {
-    return view("backend.Blog.create");
-})->middleware("backend_authenticate");
-Route::post('liquid/blog/store', function (Request $request) {
-    // $path = $request->file();
-
-    // return response()->json($path, 200);
-});
+Route::get('/backend/blog', "Backend\BlogController@index")->name("blog.index");
+Route::post('backend/blog/store', "Backend\BlogController@store")->name("blog.store");
+Route::get('backend/blog/create', "Backend\BlogController@create")->name("blog.create");
+Route::get('backend/blog/show/{id}', "Backend\BlogController@show")->name("blog.show");
+Route::get('backend/blog/edit/{id}', "Backend\BlogController@edit")->name("blog.edit");
+Route::get('backend/blog/delete/{id}', "Backend\BlogController@delete")->name("blog.delete");
+Route::get('backend/blog/destroy/{id}', "Backend\BlogController@destroy")->name("blog.destroy");
+Route::post('backend/blog/update/{id}', "Backend\BlogController@update")->name("blog.update");
 
 //Liquid
 Route::get('liquid/contact', "Liquid\ContactController@contact")->name("Liquid.contact");
 Route::post('liquid/contact', "Liquid\ContactController@storeContact")->name("Liquid.contact.post");
 Route::get('liquid/products', "Liquid\ProductsController@index")->name("Liquid.product.index");
 Route::get('liquid/products/{catagory}', "Liquid\ProductsController@index_catagory")->name("Liquid.product.index.catagory");
+Route::get('liquid/products/catagory',"Liquid\ProductsController@index_catagory_multi")->name("Liquid.product.index.catagory.multi");
 Route::post('liquid/products/fetch', "Liquid\ProductsController@fetch")->name("Liquid.product.index.ajax");
 Route::get('liquid/products/{id}/detail', "Liquid\ProductsController@show")->name("Liquid.product.show");
 
@@ -128,7 +129,7 @@ Route::get("liquid/cart/bill", "Liquid\CartController@totalPrice")->name("Liquid
 Route::get("liquid/buynow/{id}", "Liquid\CartController@buynow")->name("Liquid.buy.now");
 
 Route::get("liquid/checkout/array", function (Request $request) {
-    session(["array"=>$request->input("array")]);
+    session(["array" => $request->input("array")]);
     // dd(CartModel::$array);
     return response(session("array"), 200);
 })->name("Liquid.array");
@@ -136,10 +137,17 @@ Route::get("liquid/checkout/array", function (Request $request) {
 Route::get("liquid/checkout", "Liquid\CheckoutController@index")->name("Liquid.checkout");
 Route::post("liquid/checkout", "Liquid\CheckoutController@store")->name("Liquid.checkout.store");
 
-Route::get("liquid","Liquid\HomepageController@index")->name("Liquid.home");
-Route::get("liquid/about","Liquid\AboutController@index")->name("Liquid.about");
+Route::get("liquid", "Liquid\HomepageController@index")->name("Liquid.home");
+Route::get("liquid/about", "Liquid\AboutController@index")->name("Liquid.about");
 
-Route::get("destroy",function(){
+Route::get("liquid/blog","Liquid\BlogController@index")->name("Liquid.blog");
+Route::get("liquid/blog/page","Liquid\BlogController@fetch")->name("Liquid.blog.ajax");
+Route::get("liquid/blog/{id}","Liquid\BlogController@show")->name("Liquid.blog.single");
+Route::get("liquid/blog/tag/{tag}","Liquid\BlogController@index_tag")->name("Liquid.blog.tag");
+Route::get("liquid/blog/name/{name}","Liquid\BlogController@index_name")->name("Liquid.blog.name");
+
+Route::get("destroy", function () {
     $cart = new CartModel();
     $cart->destroy();
+    return redirect(route("Liquid.home"));
 });

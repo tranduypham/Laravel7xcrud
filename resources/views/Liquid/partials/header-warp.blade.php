@@ -8,7 +8,7 @@
                 </p>
             </div>
             <div class="col-md-6 d-flex justify-content-md-end">
-                <div class="social-media mr-4">
+                {{-- <div class="social-media mr-4">
                     <p class="mb-0 d-flex">
                         <a href="#" class="d-flex align-items-center justify-content-center"><span
                                 class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
@@ -19,9 +19,9 @@
                         <a href="#" class="d-flex align-items-center justify-content-center"><span
                                 class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
                     </p>
-                </div>
+                </div> --}}
                 <div class="reg">
-                    <p class="mb-0"><a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a></p>
+                    <p class="mb-0"><a href="{{ asset("/backend") }}">Log In For Admin</a></p>
                 </div>
             </div>
         </div>

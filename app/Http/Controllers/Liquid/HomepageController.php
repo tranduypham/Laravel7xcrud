@@ -39,6 +39,9 @@ class HomepageController extends Controller
         foreach ($newArriveds as $newArrived) {
             $new[] = $newArrived->id;
         }
+        // Lấy danh sách blog
+        $blogs = DB::table('blog')->orderBy("created_at","desc")->take(4)->get();
+        view()->share('blogs',$blogs);
         view()->share('bestSeller', $best);
         view()->share('newArrived', $new);
     }

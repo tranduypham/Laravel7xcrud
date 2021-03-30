@@ -18,9 +18,9 @@
         </div>
     @endif
 
-    {{-- <form action="{{ route('blog.store') }}" method="post" name="blog" enctype="multipart/form-data"> --}}
+    <form action="{{ route('blog.store') }}" method="post" name="blog" enctype="multipart/form-data">
     @csrf
-    <a class="text-primary" href="">Quay về trang chủ</a>
+    <a class="text-primary" href="{{ route("blog.index") }}">Quay về trang chủ</a>
     <div class="form-group">
         <label for="blog_name">Tiêu đề blog :</label>
         <input type="text" class="form-control" id="blog_name" placeholder="Nhập tên" name="blog_name"
@@ -45,14 +45,24 @@
         @enderror
     </div>
     <div class="form-group">
+        <label for="blog_intro">Lời tựa:</label>
+        {{-- <input type="text" class="form-control" id="blog_slug" placeholder="Nhập slug" name="blog_intro"
+            value="{{ old('blog_intro', '') }}"> --}}
+        <textarea name="blog_intro" class="form-control" id="blog_intro" cols="30"
+        rows="10">{!! old('blog_intro', '') !!}</textarea>
+        @error('blog_slug')
+            <div class="text-dange">{{ $message }}</div>
+        @enderror
+    </div>
+    <div class="form-group">
         <label for="blog_desc">Miêu tả danh mục:</label>
         <textarea name="blog_desc" class="form-control editorjs" id="editorjs" cols="30"
-            rows="15">{!! old('blog_desc', '') !!}</textarea>
+            rows="30">{!! old('blog_desc', '') !!}</textarea>
     </div>
     <button type="submit" class="btn  btn-lg btn-info" id="btn-load">Submit</button>
-    <a class="btn btn-lg btn-primary" href="">Quay về trang chủ</a>
+    <a class="btn btn-lg btn-primary" href="{{ route("blog.index") }}">Quay về trang chủ</a>
 
-    {{-- </form> --}}
+    </form>
 @endsection
 
 @section('appendjs')
@@ -68,7 +78,9 @@
                 "insertdatetime media nonbreaking save table directionality",
                 "emoticons template paste textpattern"
             ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+            toolbar: ['undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify , outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview | insertfile image media template codesample | ltr rtl'],
+            
+            toolbar_sticky: true,
             file_picker_callback: function(callback, value, meta) {
                 var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName(
                     'body')[0].clientWidth;

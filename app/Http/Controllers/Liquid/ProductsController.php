@@ -51,6 +51,9 @@ class ProductsController extends Controller
         foreach($newArriveds as $newArrived){
             $new[] = $newArrived->id;
         }
+        // Lấy danh sách blog
+        $blogs = DB::table('blog')->orderBy("created_at","desc")->take(4)->get();
+        view()->share('blogs',$blogs);
         view()->share('bestSeller', $best);
         view()->share('newArrived', $new);
     }
@@ -75,10 +78,26 @@ class ProductsController extends Controller
         //Lấy danh sách sản phẩm
         $products = DB::table('products')
             ->join("catagory","products.catagory_id","=","catagory.id")
-            ->select("products.id","catagory_name","products.product_image","products.product_price","products.product_name")
+            ->select("products.id","catagory_name","products.product_image","products.product_price","products.product_name","sale")
             ->where("catagory.id",$catagory)
             ->paginate(9);
         return view("Liquid.site.products",compact(["catagories","products"]));
+    }
+    public function index_catagory_multi(Request $request){
+        $cata = $request->input("catalog","");
+        $cata = explode(",",$cata);
+        // echo "hello";
+        // dd($cata);
+        // die;
+        // Lấy danh sách danh mục
+        $catagories = DB::table('catagory')->select("id","catagory_name")->get();
+        //Lấy danh sách sản phẩm
+        $products = DB::table('products')
+            ->join("catagory","products.catagory_id","=","catagory.id")
+            ->select("products.id","catagory_name","products.product_image","products.product_price","products.product_name","sale")
+            ->whereIn("catagory_name",$cata)
+            ->paginate(9);
+        return view("Liquid.site.products-detail",compact(["catagories","products"]))->render();
     }
 
 

@@ -1,6 +1,6 @@
 <div class="row">
     {{-- Sale --}}
-    <div class="col-md-4 d-flex">
+    {{-- <div class="col-md-4 d-flex">
         <div class="product ftco-animate">
             <div class="img d-flex align-items-center justify-content-center"
                 style="background-image: url({{ asset('liquorstore-master/') }}/images/prod-1.jpg);">
@@ -23,9 +23,9 @@
                         class="price">$49.00</span></p>
             </div>
         </div>
-    </div>
+    </div> --}}
     {{-- Best seller --}}
-    <div class="col-md-4 d-flex">
+    {{-- <div class="col-md-4 d-flex">
         <div class="product ftco-animate">
             <div class="img d-flex align-items-center justify-content-center"
                 style="background-image: url({{ asset('liquorstore-master/') }}/images/prod-2.jpg);">
@@ -47,9 +47,9 @@
                 <span class="price">$69.00</span>
             </div>
         </div>
-    </div>
+    </div> --}}
     {{-- New arrive --}}
-    <div class="col-md-4 d-flex">
+    {{-- <div class="col-md-4 d-flex">
         <div class="product ftco-animate">
             <div class="img d-flex align-items-center justify-content-center"
                 style="background-image: url({{ asset('liquorstore-master/') }}/images/prod-3.jpg);">
@@ -71,7 +71,7 @@
                 <span class="price">$69.00</span>
             </div>
         </div>
-    </div>
+    </div> --}}
     @foreach ($products as $product)
         @php
             if ($product->product_image) {
@@ -130,44 +130,40 @@
         </div>
     </div>
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Không có cái script này sẽ bị mất hình
-    var contentWayPoint = function() {
-		var i = 0;
-		$('.ftco-animate').waypoint( function( direction ) {
+    $(document).ready(function(){
+        var contentWayPoint = function() {
+            $('.blog-body .ftco-animate').each(function() {
+                if (!$(this).hasClass('ftco-animated')) {
+                    console.log("gau gau");
+                    $(this).addClass('item-animate');
+                    setTimeout(function() {
+                        $('body .ftco-animate.item-animate').each(function(k) {
+                            console.log("meo meo");
+                            var el = $(this);
+                            setTimeout(function() {
 
-			if( direction === 'down' && !$(this.element).hasClass('ftco-animated') ) {
+                                var effect = el.data('animate-effect');
+                                if (effect === 'fadeIn') {
+                                    el.addClass('fadeIn ftco-animated');
+                                } else if (effect === 'fadeInLeft') {
+                                    el.addClass('fadeInLeft ftco-animated');
+                                } else if (effect === 'fadeInRight') {
+                                    el.addClass('fadeInRight ftco-animated');
+                                } else {
+                                    el.addClass('fadeInUp ftco-animated');
+                                }
+                                el.removeClass('item-animate');
 
-				i++;
+                            }, k * 50, 'easeInOutExpo');
+                        });
+                    }, 100);
 
-				$(this.element).addClass('item-animate');
-				setTimeout(function(){
-
-					$('body .ftco-animate.item-animate').each(function(k){
-						var el = $(this);
-						setTimeout( function () {
-							var effect = el.data('animate-effect');
-							if ( effect === 'fadeIn') {
-								el.addClass('fadeIn ftco-animated');
-							} else if ( effect === 'fadeInLeft') {
-								el.addClass('fadeInLeft ftco-animated');
-							} else if ( effect === 'fadeInRight') {
-								el.addClass('fadeInRight ftco-animated');
-							} else {
-								el.addClass('fadeInUp ftco-animated');
-							}
-							el.removeClass('item-animate');
-						},  k * 50, 'easeInOutExpo' );
-					});
-
-				}, 100);
-
-			}
-
-		} , { offset: '95%' } );
-	};
-	contentWayPoint();
-    // Về tra ý nghĩa
+                }
+            });
+        };
+        contentWayPoint();
+    });
 </script>
 

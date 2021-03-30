@@ -8,126 +8,86 @@
 
 @section('content')
     <section class="ftco-section">
-        <div class="container">
-            <div class="row d-flex">
-                <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-                    <div class="blog-entry d-md-flex">
-                        <a href="blog-single.html" class="block-20 img"
-                            style="background-image: url('{{ asset('liquorstore-master/') }}/images/image_2.jpg');">
-                        </a>
-                        <div class="text p-4 bg-light">
-                            <div class="meta">
-                                <p><span class="fa fa-calendar"></span> 23 April 2020</p>
-                            </div>
-                            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                            </p>
-                            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-                    <div class="blog-entry d-md-flex">
-                        <a href="blog-single.html" class="block-20 img"
-                            style="background-image: url('{{ asset('liquorstore-master/') }}/images/image_1.jpg');">
-                        </a>
-                        <div class="text p-4 bg-light">
-                            <div class="meta">
-                                <p><span class="fa fa-calendar"></span> 23 April 2020</p>
-                            </div>
-                            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                            </p>
-                            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-                    <div class="blog-entry d-md-flex">
-                        <a href="blog-single.html" class="block-20 img"
-                            style="background-image: url('{{ asset('liquorstore-master/') }}/images/image_3.jpg');">
-                        </a>
-                        <div class="text p-4 bg-light">
-                            <div class="meta">
-                                <p><span class="fa fa-calendar"></span> 23 April 2020</p>
-                            </div>
-                            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                            </p>
-                            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-                    <div class="blog-entry d-md-flex">
-                        <a href="blog-single.html" class="block-20 img"
-                            style="background-image: url('{{ asset('liquorstore-master/') }}/images/image_4.jpg');">
-                        </a>
-                        <div class="text p-4 bg-light">
-                            <div class="meta">
-                                <p><span class="fa fa-calendar"></span> 23 April 2020</p>
-                            </div>
-                            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                            </p>
-                            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-                    <div class="blog-entry d-md-flex">
-                        <a href="blog-single.html" class="block-20 img"
-                            style="background-image: url('{{ asset('liquorstore-master/') }}/images/image_5.jpg');">
-                        </a>
-                        <div class="text p-4 bg-light">
-                            <div class="meta">
-                                <p><span class="fa fa-calendar"></span> 23 April 2020</p>
-                            </div>
-                            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                            </p>
-                            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-                    <div class="blog-entry d-md-flex">
-                        <a href="blog-single.html" class="block-20 img"
-                            style="background-image: url('{{ asset('liquorstore-master/') }}/images/image_6.jpg');">
-                        </a>
-                        <div class="text p-4 bg-light">
-                            <div class="meta">
-                                <p><span class="fa fa-calendar"></span> 23 April 2020</p>
-                            </div>
-                            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                            </p>
-                            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col text-center">
-                    <div class="block-27">
-                        <ul>
-                            <li><a href="#">&lt;</a></li>
-                            <li class="active"><span>1</span></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">&gt;</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div class="container blog-body">
+            @include("Liquid.site.blog-index-body")
         </div>
     </section>
+    <style>
+        .block-27 nav ul.pagination{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+        .block-27 nav ul li {
+            margin-left: 5px;
+            display: inline-block;
+            margin-bottom: 4px;
+            font-weight: 400;
+            border: 1px solid transparent !important;
+        }
+
+        .block-27 nav ul li a:hover {
+            color: #b7472a !important;
+            background-color: #ff340136;
+        }
+
+        .block-27 nav ul li a:focus {
+            color: #b7472a !important;
+            box-shadow: 0 0 0 0.2rem #b7462a46 !important;
+        }
+
+        .block-27 nav ul li.active span {
+            background-color: #cc411f !important;
+            color: white;
+            border: 1px solid transparent !important;
+        }
+
+        .page-link {
+            padding: 0;
+        }
+
+        .page-item:first-child .page-link {
+            margin-left: 0;
+            border-top-left-radius: 50%;
+            border-bottom-left-radius: 50%;
+        }
+
+        .page-item:last-child .page-link {
+            border-top-right-radius: 50%;
+            border-bottom-right-radius: 50%;
+        }
+
+    </style>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            function fetch_data(next_page) {
+                $.ajax({
+                    url: "{{ route('Liquid.blog.ajax') }}" + "?page=" + next_page,
+                    type: "GET",
+                    success: function(data) {
+                        $("div.blog-body").html(data);
+                    }
+                });
+            };
+
+            $("body").on("click", ".pagination a", function(event) {
+                // console.log($("div.table-products"));
+                event.preventDefault();
+                var current_page = $("li.active span.page-link").text();
+                console.log(current_page);
+                var next_page = $(this).attr("href").split("?page=")[1];
+                console.log(next_page);
+                fetch_data(next_page);
+            });
+        });
+
+
+
+
+    </script>
+
 @endsection

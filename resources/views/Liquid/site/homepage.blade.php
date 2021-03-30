@@ -448,24 +448,29 @@
                 </div>
             </div>
             <div class="row d-flex">
+                @foreach ($blogs as $blog)
                 <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
                     <div class="blog-entry d-flex">
                         <a href="blog-single.html" class="block-20 img"
-                            style="background-image: url('{{ asset('liquorstore-master/') }}/images/image_1.jpg');">
+                            style="background-image: url('{{ asset(str_replace("public/","storage/",$blog->thumbnail)) }}');">
                         </a>
                         <div class="text p-4 bg-light">
                             <div class="meta">
-                                <p><span class="fa fa-calendar"></span> 23 April 2020</p>
+                                @php
+                                    $date = new DateTime($blog->created_at);
+                                @endphp
+                                <p><span class="fa fa-calendar"></span> {{ $date->format("j F Y") }}</p>
                             </div>
-                            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
+                            <h3 class="heading mb-3"><a href="#">{{ $blog->name }}</a></h3>
+                            <p>{{ $blog->intro }}
                             </p>
-                            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+                            <a href="{{ route("Liquid.blog.single",$blog->id) }}" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+                @endforeach
+                {{-- <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
                     <div class="blog-entry d-flex">
                         <a href="blog-single.html" class="block-20 img"
                             style="background-image: url('{{ asset('liquorstore-master/') }}/images/image_2.jpg');">
@@ -515,7 +520,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>

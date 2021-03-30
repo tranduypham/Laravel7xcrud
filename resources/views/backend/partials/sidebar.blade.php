@@ -74,6 +74,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{route("blog.index")}}">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Blog</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{route("setting")}}">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Cấu hình</span>

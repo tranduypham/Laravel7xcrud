@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="index.html">Liquor <span>store</span></a>
+        <a class="navbar-brand" href="{{ route("Liquid.home") }}">Liquor <span>store</span></a>
         <div class="order-lg-last btn-group">
             <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -36,7 +36,7 @@
                         <a class="dropdown-item" href="{{ route("Liquid.checkout") }}">Checkout</a>
                     </div>
                 </li>
-                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                <li class="nav-item"><a href="{{ route("Liquid.blog") }}" class="nav-link">Blog</a></li>
                 <li class="nav-item active"><a href="{{ route("Liquid.contact") }}" class="nav-link">Contact</a></li>
             </ul>
         </div>
